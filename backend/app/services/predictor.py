@@ -2,6 +2,8 @@ import joblib
 from pathlib import Path
 import pandas as pd
 
+from app.ml.shap_explainer import explain_prediction
+
 # backend/app
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +24,16 @@ FEATURES = [
     "sodium"
 ]
 
+
 def predict_nutriscore(data):
+
     df = pd.DataFrame([data])
+
     prediction = model.predict(df)[0]
-    return prediction
+
+    _, shap_data = explain_prediction(df.iloc[0].tolist())
+
+    return {
+        "predicted_grade": prediction,
+        "shap": shap_data
+    }

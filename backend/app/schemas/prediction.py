@@ -11,3 +11,13 @@ class PredictionRequest(BaseModel):
     fiber: float
     salt: float
     sodium: float
+
+class ShapFeature(BaseModel):
+
+    feature: str
+
+    impact: float
+
+    direction: str
+
+    abs_impact: float

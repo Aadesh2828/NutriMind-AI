@@ -42,3 +42,15 @@ export const predictNutriScore = async (data) => {
   const response = await API.post("/api/predict", data);
   return response.data;
 };
+
+// =====================================
+// Nutri AI Assistant
+// =====================================
+
+export const askNutri = async (question) => {
+  const response = await API.post("/chatbot/chat", {
+    question: question,
+  });
+
+  return response.data;
+};

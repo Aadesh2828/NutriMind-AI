@@ -4,10 +4,12 @@ from app.services.predictor import predict_nutriscore
 
 router = APIRouter()
 
+
 @router.post("/predict")
 def predict(request: PredictionRequest):
-    prediction = predict_nutriscore(request.model_dump())
 
-    return {
-        "predicted_grade": prediction.upper()
-    }
+    result = predict_nutriscore(request.model_dump())
+
+    result["predicted_grade"] = result["predicted_grade"].upper()
+
+    return result

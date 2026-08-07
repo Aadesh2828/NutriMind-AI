@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.products import router as product_router
 from app.routes.prediction import router as prediction_router
+from app.routes.chatbot import router as chatbot_router
 
 
 app = FastAPI(
@@ -39,6 +40,7 @@ app.include_router(
     tags=["Prediction"]
 )
 
+app.include_router(chatbot_router)
 
 @app.get("/")
 def home():

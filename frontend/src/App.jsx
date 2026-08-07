@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Prediction from "./pages/Prediction";
-import Chatbot from "./pages/Chatbot";
+import Nutri from "./pages/Nutri";
 import Visualization from "./pages/Visualization";
 
 
@@ -43,8 +43,8 @@ function App() {
       Prediction
     </Link>
 
-    <Link to="/chatbot">
-      AI Assistant
+    <Link to="/nutri">
+      Nutri
     </Link>
 
     <Link to="/visualization">
@@ -79,8 +79,8 @@ function App() {
         />
 
         <Route
-          path="/chatbot"
-          element={<Chatbot />}
+          path="/nutri"
+          element={<Nutri />}
         />
 
         <Route

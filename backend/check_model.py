@@ -1,13 +1,8 @@
-import pickle
+from app.ml.shap_explainer import explain_prediction
 
-with open("app/models/random_forest_model.pkl", "rb") as f:
-    obj = pickle.load(f)
+prediction, shap_data = explain_prediction(
+    [250, 12, 3, 25, 8, 10, 5, 0.6, 240]
+)
 
-print(type(obj))
-print(obj.__class__)
-print(hasattr(obj, "predict"))
-
-if hasattr(obj, "predict"):
-    print("This is a trained model.")
-else:
-    print("This is NOT a trained model.")
+print(prediction)
+print(shap_data)

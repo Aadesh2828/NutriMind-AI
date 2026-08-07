@@ -58,9 +58,11 @@ export default function Prediction() {
     sodium: "",
   });
 
+  const [shapData, setShapData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [grade, setGrade] = useState(null);
   const [error, setError] = useState("");
+
 
   const handleChange = (e) => {
     setForm({
@@ -83,6 +85,7 @@ export default function Prediction() {
     });
 
     setGrade(null);
+    setShapData([]);
     setError("");
   };
 
@@ -119,6 +122,7 @@ export default function Prediction() {
     console.log("Predicted Grade:", res.predicted_grade);
 
     setGrade(res.predicted_grade);
+    setShapData(res.shap || []);
 
   } catch (err) {
     setError("Prediction failed.");
@@ -132,6 +136,11 @@ export default function Prediction() {
     grade && gradeInfo[grade]
       ? gradeInfo[grade]
       : null;
+
+  const maxImpact =
+  shapData.length > 0
+    ? Math.max(...shapData.map((item) => item.abs_impact))
+    : 1;
 
   return (
     <div className="prediction-page">
@@ -225,17 +234,72 @@ export default function Prediction() {
 
               <hr />
 
-              <h3>SHAP Explanation</h3>
-
-              <ul>
-
-                <li>Feature contribution will appear here.</li>
-
-                <li>Integrated in Phase 6.</li>
-
-              </ul>
-
               <hr />
+
+              <h3>Why this prediction?</h3>
+
+              {shapData.length > 0 ? (
+
+                <div className="shap-card">
+
+                  {shapData.map((item, index) => (
+
+                    <div
+                      key={index}
+                      className="shap-item"
+                    >
+
+                      <div className="shap-header">
+
+                        <span>
+
+                          {item.direction === "positive"
+                            ? "🟢"
+                            : "🔴"}
+
+                          {" "}
+
+                          {item.feature}
+
+                        </span>
+
+                        <span>
+
+                          {item.impact > 0 ? "+" : ""}
+
+                          {item.impact}
+
+                        </span>
+
+                      </div>
+
+                      <div className="bar-bg">
+
+                        <div
+
+                          className={`bar ${item.direction}`}
+
+                          style={{
+
+                            width: `${(item.abs_impact / maxImpact) * 100}%`
+
+                          }}
+
+                        />
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+              ) : (
+
+                <p>No SHAP explanation available.</p>
+
+              )}
 
               <h3>Recommendation</h3>
 
