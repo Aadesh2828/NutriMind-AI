@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getProductSuggestions } from "../services/api";
 
 function Home() {
 
@@ -7,6 +8,40 @@ function Home() {
     useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+
+  useEffect(() => {
+    console.log("Search term:", searchTerm);
+
+    if (searchTerm.trim().length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        console.log("Calling suggestions API for:", searchTerm);
+
+        const results = await getProductSuggestions(searchTerm.trim());
+
+        console.log("Suggestions received:", results);
+
+        setSuggestions(results);
+        setShowSuggestions(results.length > 0);
+
+      } catch (error) {
+        console.error("Suggestion API error:", error);
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   const handleSearch = () => {
 
@@ -52,24 +87,70 @@ function Home() {
 
         <div className="hero-search">
 
-          <input
+          <div className="search-input-wrapper">
+
+            <input
               type="text"
               placeholder="Search a food product..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                      handleSearch();
-                  }
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setShowSuggestions(true);
               }}
-          />
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+              onFocus={() => {
+                if (suggestions.length > 0) {
+                  setShowSuggestions(true);
+                }
+              }}
+            />
 
-          <button
-            onClick={handleSearch}
-          >
+            {showSuggestions && suggestions.length > 0 && (
 
+              <div className="suggestions-dropdown">
+
+                {suggestions.map((product) => (
+
+                  <div
+                    key={product.id}
+                    className="suggestion-item"
+                    onClick={() => {
+
+                      setSearchTerm(
+                        product.product_name
+                      );
+
+                      setShowSuggestions(false);
+
+                      navigate("/products", {
+                        state: {
+                          search: product.product_name
+                        }
+                      });
+
+                    }}
+                  >
+
+                    <span>
+                      {product.product_name}
+                    </span>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            )}
+
+          </div>
+
+          <button onClick={handleSearch}>
             Search
-
           </button>
 
         </div>

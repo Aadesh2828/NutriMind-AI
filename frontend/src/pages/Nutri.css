@@ -226,3 +226,41 @@ height:55px;
 }
 
 }
+
+.nutri-response {
+    line-height: 1.7;
+    color: #374151;
+}
+
+.nutri-response p {
+    margin: 0 0 12px;
+}
+
+.nutri-response ul,
+.nutri-response ol {
+    margin: 10px 0;
+    padding-left: 24px;
+}
+
+.nutri-response li {
+    margin-bottom: 7px;
+}
+
+.nutri-response strong {
+    font-weight: 700;
+    color: #111827;
+}
+
+.nutri-response h1,
+.nutri-response h2,
+.nutri-response h3 {
+    margin-top: 18px;
+    margin-bottom: 10px;
+    color: #111827;
+}
+
+.nutri-response h1:first-child,
+.nutri-response h2:first-child,
+.nutri-response h3:first-child {
+    margin-top: 0;
+}

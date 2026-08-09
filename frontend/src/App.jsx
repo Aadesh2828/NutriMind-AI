@@ -25,7 +25,7 @@ function App() {
     to="/"
     className="logo"
   >
-    🥗 Nutri<span>Mind AI</span>
+    Nutri<span>Mind AI</span>
   </Link>
 
 

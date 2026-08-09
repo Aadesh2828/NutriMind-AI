@@ -68,6 +68,37 @@ def search_products(
 
 
 @router.get(
+    "/suggestions",
+    response_model=List[ProductResponse]
+)
+def product_suggestions(
+    query: str,
+    limit: int = Query(
+        default=6,
+        ge=1,
+        le=10
+    ),
+    db: Session = Depends(get_db)
+):
+
+    if not query.strip():
+        return []
+
+    products = (
+        db.query(Product)
+        .filter(
+            Product.product_name.ilike(
+                f"{query}%"
+            )
+        )
+        .limit(limit)
+        .all()
+    )
+
+    return products
+
+
+@router.get(
     "/{product_id}",
     response_model=ProductResponse
 )

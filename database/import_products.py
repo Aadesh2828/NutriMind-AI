@@ -46,7 +46,7 @@ engine = create_engine(DATABASE_URL)
 # 5. CSV File Path
 # --------------------------------------------------
 
-CSV_PATH = PROJECT_ROOT / "data" / "processed" / "openfoodfacts_clean.csv"
+CSV_PATH = PROJECT_ROOT / "data" / "processed" / "open_food_facts.csv"
 
 
 # --------------------------------------------------

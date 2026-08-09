@@ -29,6 +29,17 @@ export const searchProducts = async (query, limit = 20) => {
   return response.data;
 };
 
+export const getProductSuggestions = async (query) => {
+  const response = await API.get("/products/suggestions", {
+    params: {
+      query,
+      limit: 6,
+    },
+  });
+
+  return response.data;
+};
+
 export const getProduct = async (productId) => {
   const response = await API.get(`/products/${productId}`);
   return response.data;

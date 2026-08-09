@@ -101,47 +101,126 @@ button {
 ========================= */
 
 .hero-search {
-  max-width: 650px;
-  margin: 35px auto;
+    max-width: 650px;
+    margin: 35px auto;
 
-  display: flex;
+    display: flex;
 
-  background: white;
-  border: 1px solid #d1d5db;
+    background: white;
+    border: 1px solid #d1d5db;
 
-  border-radius: 12px;
+    border-radius: 12px;
 
-  overflow: hidden;
+    /* IMPORTANT:
+       Don't hide the suggestion dropdown */
+    overflow: visible;
 
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+
+    position: relative;
+
+    z-index: 100;
+}
+
+.search-input-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 0;
 }
 
 .hero-search input {
-  flex: 1;
+    width: 100%;
+    box-sizing: border-box;
 
-  padding: 16px 20px;
+    padding: 16px 20px;
 
-  border: none;
-  outline: none;
+    border: none;
+    outline: none;
 
-  font-size: 16px;
+    font-size: 16px;
 }
 
 .hero-search button {
-  background: #16a34a;
-  color: white;
+    background: #16a34a;
+    color: white;
 
-  border: none;
+    border: none;
 
-  padding: 0 30px;
+    padding: 0 30px;
 
-  font-size: 16px;
-  font-weight: 600;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
 }
 
 .hero-search button:hover {
-  background: #15803d;
+    background: #15803d;
 }
+
+
+/* =========================
+   AUTOCOMPLETE DROPDOWN
+========================= */
+
+.suggestions-dropdown {
+    position: absolute;
+
+    top: calc(100% + 8px);
+    left: 0;
+
+    width: 100%;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15);
+
+    overflow: hidden;
+
+    z-index: 9999;
+
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+
+/* =========================
+   SUGGESTION ITEM
+========================= */
+
+.suggestion-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 16px;
+
+    background: white;
+
+    color: #1f2937;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: background 0.2s;
+}
+
+.suggestion-item:hover {
+    background: #f3f4f6;
+}
+
+.suggestion-icon {
+    font-size: 14px;
+}
+
 
 /* =========================
    FEATURES

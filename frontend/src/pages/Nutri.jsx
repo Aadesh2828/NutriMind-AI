@@ -1,3 +1,4 @@
+import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import { askNutri } from "../services/api";
 import "./Nutri.css";
@@ -92,7 +93,11 @@ export default function Nutri() {
 
             <h2>Response</h2>
 
-            <p>{answer}</p>
+            <div className="nutri-response">
+              <ReactMarkdown>
+                {answer}
+              </ReactMarkdown>
+            </div>
 
             <div className="response-footer">
               Educational information based on WHO, FSSAI and evidence-based nutrition guidance.
